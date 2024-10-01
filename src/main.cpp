@@ -10,12 +10,6 @@
 #define LEDB_G 38  // Green pin
 #define LEDB_B 37  // Blue pin
 
-// Pin assignment for potentiometer
-#define POT_PIN 1
-
-// Pin assignment for push button
-#define BUTTON_PIN 21
-
 // Pin assignment for buzzer
 #define BUZZER_PIN 19
 
@@ -64,16 +58,11 @@ void setup() {
 
   ledcSetup(5, 5000, 8); // Channel 5 for LED B Blue
   ledcAttachPin(LEDB_B, 5); // Attach Blue pin to channel 5
-  
+
+        
   // Setup for buzzer
   pinMode(BUZZER_PIN, OUTPUT);
 
-  // INPUT PINS SETUP
-  // Setup for potentiometer
-  pinMode(POT_PIN, INPUT);
-
-  // Setup for button
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), handleButtonPress, FALLING);
 
   Serial.println("Setup complete. Reading potentiometer...");
