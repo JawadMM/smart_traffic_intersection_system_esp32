@@ -11,6 +11,4 @@
 
 void configurePins();
 
-void IRAM_ATTR handleButtonPress();
-
 #endif 

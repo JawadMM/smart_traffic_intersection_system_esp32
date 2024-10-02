@@ -1,13 +1,14 @@
 #ifndef LIGHTCONTROL_H
 #define LIGHTCONTROL_H
 
-// Define colors
-const int RED[] = {239, 57, 50};
-const int YELLOW[] = {238, 188, 25};
-const int GREEN[] = {66, 198, 0};
-const int OFF[] = {0, 0, 0};
+// Declare colors
+const int RED_COLOR[];
+const int YELLOW_COLOR[];
+const int GREEN_COLOR[];
+const int OFF[];
 
 // Declare functions
-void setLightColor(int rgbPins[], int color[]);
+void setRGBColor(int rgbPins[], const int color[]);
+void startLightsCycle();
 
 #endif

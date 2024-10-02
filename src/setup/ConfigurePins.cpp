@@ -1,4 +1,6 @@
 #include "ConfigurePins.h"
+#include "../button_control/ButtonControl.h"
+#include <Arduino.h>
 
 void configurePins() {
   // INPUT PINS SETUP
@@ -11,21 +13,17 @@ void configurePins() {
 
   //OUTPUT PINS SETUP
   // Setup for RGB LED Lights
-  int pins[] = RGB_LED_A_PINS;
+  int pinsA[] = RGB_LED_A_PINS;
   for (int i = 0; i < 3; i++) {
-    pinMode(pins[i], OUTPUT);
+    pinMode(pinsA[i], OUTPUT);
   }
 
-  int pins[] = RGB_LED_B_PINS;
+  int pinsB[] = RGB_LED_B_PINS;
   for (int i = 0; i < 3; i++) {
-    pinMode(pins[i], OUTPUT);
+    pinMode(pinsB[i], OUTPUT);
   }
   
   // Setup for buzzer
   pinMode(BUZZER_PIN, OUTPUT);
   
-}
-
-void IRAM_ATTR handleButtonPress() {
-
 }
