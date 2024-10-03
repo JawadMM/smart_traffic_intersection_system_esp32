@@ -1,14 +1,15 @@
-#ifndef LIGHTCONTROL_H
-#define LIGHTCONTROL_H
+#ifndef LIGHT_CONTROL_H
+#define LIGHT_CONTROL_H
 
 // Declare colors
-const int RED_COLOR[];
-const int YELLOW_COLOR[];
-const int GREEN_COLOR[];
-const int OFF[];
+// int RED_COLOR[3];
+// int YELLOW_COLOR[3];
+// int GREEN_COLOR[3];
+// int OFF[];
 
 // Declare functions
 void setRGBColor(int rgbPins[], const int color[]);
-void startLightsCycle();
+void turnAllLightsRed();
+void startLightsCycle(int greenDurationA);
 
 #endif

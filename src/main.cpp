@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include "./setup/ConfigurePins.h"
 #include "./light_control/LightControl.h"
+#include "./potentiometer_control/PotentiometerControl.h"
+#include "./button_control/ButtonControl.h"
 
 void setup() {
   Serial.begin(9600);
@@ -12,11 +14,15 @@ void setup() {
 
 void loop() {
 
-  startLightsCycle();
+  if (trainIsApproaching) {
+    turnAllLightsRed();
+    trainIsApproaching = false;
+    Serial.println("BACK TO CYCLE...");
+  }
 
-  // Read potentiometer value
-  // int potValue = analogRead(POTENTIOMETER_PIN);
-  // Serial.print("Potentiometer Value: ");
-  // Serial.println(potValue);
-  // delay(500);
+  readPotentiometerValue();
+  // Serial.print("in main:");
+  // Serial.println(potentiometerValue);
+
+  startLightsCycle(potentiometerValue);
 }
