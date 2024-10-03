@@ -14,8 +14,8 @@ int pinsA[] = RGB_LED_A_PINS;
 int pinsB[] = RGB_LED_B_PINS;
 
 // Timing durations in milliseconds
-// unsigned long GREEN_DURATION;   // Green light duration: 10 seconds
-const unsigned long YELLOW_DURATION = 3000;    // Yellow light duration: 2 seconds
+const unsigned long TOTAL_GREEN_DURATION = 30 * 1000; // Total green light duration is 30 seconds (split between the lights using the potentiometer value)
+const unsigned long YELLOW_DURATION = 3 * 1000; // Yellow light duration: 3 seconds
 
 unsigned long previousMillis = 0; // Store last time state changed
 
@@ -63,7 +63,7 @@ void startLightsCycle(int greenDurationA) {
     setTrafficLightsColor();
 
     // int greenDurationA = durations[0];
-    int greenDurationB = (30 - greenDurationA) * 1000;
+    int greenDurationB = TOTAL_GREEN_DURATION - greenDurationA * 1000;
 
     unsigned long currentMillis = millis();
 
