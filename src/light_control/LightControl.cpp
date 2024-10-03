@@ -25,8 +25,9 @@ TrafficLightState lightAState = GREEN;
 TrafficLightState lightBState = RED;
 
 void setRGBColor(int rgbPins[], int color[]) {
+    // Set the light color for each pin of the RGB LED light
     for (int i = 0; i < 3; i++) {
-        analogWrite(rgbPins[i], 255 - color[i]);
+        analogWrite(rgbPins[i], 255 - color[i]); // 255 - [color] because the anode is connected to the voltage
     }
 }
 
@@ -62,7 +63,6 @@ void startLightsCycle(int greenDurationA) {
     // Update the traffic light colors
     setTrafficLightsColor();
 
-    // int greenDurationA = durations[0];
     int greenDurationB = TOTAL_GREEN_DURATION - greenDurationA * 1000;
 
     unsigned long currentMillis = millis();
@@ -83,6 +83,7 @@ void startLightsCycle(int greenDurationA) {
         // Switch B to green
         lightBState = GREEN;
         previousMillis = currentMillis;
+
         Serial.print("Turning B GREEN for ");
         Serial.print(greenDurationB / 1000);
         Serial.println("s");
@@ -90,31 +91,33 @@ void startLightsCycle(int greenDurationA) {
         Serial.print((greenDurationB + YELLOW_DURATION) / 1000);
         Serial.println("s");
 
-
-
     } else if (lightBState == GREEN && currentMillis - previousMillis >= greenDurationB) {
         // Switch B to yellow after green duration
         lightBState = YELLOW;
         previousMillis = currentMillis;
+
         Serial.print("Turning B YELLOW for ");
         Serial.print(YELLOW_DURATION / 1000);
         Serial.println("s");
-
 
     } else if (lightBState == YELLOW && currentMillis - previousMillis >= YELLOW_DURATION) {
         // Switch B to red after yellow duration
         lightBState = RED;
         lightAState = GREEN;
         previousMillis = currentMillis;
+
         Serial.print("Turning A GREEN for ");
         Serial.print(greenDurationA);
         Serial.println("s");
         Serial.print("Turning B RED for ");
         Serial.print((greenDurationA * 1000 + YELLOW_DURATION) / 1000);
         Serial.println("s");
+
     } else if (lightAState == RED && lightBState == RED) {
+        // Back to the inital cycle starting with light A being green
         lightAState = GREEN;
         previousMillis = currentMillis;
+
         Serial.print("Turning A GREEN for ");
         Serial.print(greenDurationA);
         Serial.println("s");
@@ -128,6 +131,7 @@ void startLightsCycle(int greenDurationA) {
 }
 
 void turnAllLightsRed() {
+    // Turn all the lights red
     Serial.println("TURNING LIGHTS RED...");
     setRGBColor(pinsA, RED_COLOR);
     setRGBColor(pinsB, RED_COLOR);
