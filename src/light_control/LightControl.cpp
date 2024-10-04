@@ -24,6 +24,7 @@ enum TrafficLightState {GREEN, YELLOW, RED};
 TrafficLightState lightAState = GREEN;
 TrafficLightState lightBState = RED;
 
+// Create a function to change RGB LED light color given its pins and a color
 void setRGBColor(int rgbPins[], int color[]) {
     // Set the light color for each pin of the RGB LED light
     for (int i = 0; i < 3; i++) {
@@ -31,6 +32,7 @@ void setRGBColor(int rgbPins[], int color[]) {
     }
 }
 
+// Create a function to change the lights color according to the state
 void setTrafficLightsColor() {
     if (lightAState == GREEN) {
         setRGBColor(pinsA, GREEN_COLOR); // Light A Green
@@ -59,12 +61,15 @@ void setTrafficLightsColor() {
     }
 }
 
+// Create a function to start the traffic cycle given a duration for the first traffic light
 void startLightsCycle(int greenDurationA) {
     // Update the traffic light colors
     setTrafficLightsColor();
 
+    // Calculate the green duration for light B
     int greenDurationB = TOTAL_GREEN_DURATION - greenDurationA * 1000;
 
+    // Get the current time to change states accordingly
     unsigned long currentMillis = millis();
 
     // Manage the state transition
@@ -126,6 +131,7 @@ void startLightsCycle(int greenDurationA) {
         Serial.println("s");
     }
 
+    // Small delay so the RGB LED lights can switch colors
     delay(10);
     
 }
@@ -135,9 +141,31 @@ void turnAllLightsRed() {
     Serial.println("TURNING LIGHTS RED...");
     setRGBColor(pinsA, RED_COLOR);
     setRGBColor(pinsB, RED_COLOR);
+    neopixelWrite(RGB_BUILTIN, 255, 0, 0); // Turn the built in RGB RED
     lightAState = RED;
     lightBState = RED;
-    delay(5000);
 }
 
+void blinkBuiltInLED(int seconds) {
+    unsigned long startMillis = millis();  // Start time of blinking
+    unsigned long previousBuilInLEDMillis = 0;
+    bool ledState = false;  // Tracks whether LED is on or off
+    
+    while (millis() - startMillis <= seconds * 1000) {
+        unsigned long currentMillis = millis();  // Update current time
+        
+        if (currentMillis - previousBuilInLEDMillis >= 500) {
+            // Toggle LED state every 500ms
+            if (ledState) {
+                neopixelWrite(RGB_BUILTIN, 0, 0, 0); // Turn off the built-in RGB
+            } else {
+                neopixelWrite(RGB_BUILTIN, 255, 0, 14); // Turn on the built-in RGB (Red)
+            }
+            ledState = !ledState;  // Toggle LED state
+            previousBuilInLEDMillis = currentMillis; // Reset time tracker for next toggle
+        }
+    }
 
+    // Ensure LED is turned off when the loop exits
+    neopixelWrite(RGB_BUILTIN, 0, 0, 0);
+}

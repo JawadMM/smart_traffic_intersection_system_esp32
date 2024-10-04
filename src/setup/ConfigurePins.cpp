@@ -2,6 +2,8 @@
 #include "../button_control/ButtonControl.h"
 #include <Arduino.h>
 
+
+// Create a function to do the initial pins setup
 void configurePins() {
   // INPUT PINS SETUP
   // Setup for potentiometer
@@ -25,5 +27,4 @@ void configurePins() {
   
   // Setup for buzzer
   pinMode(BUZZER_PIN, OUTPUT);
-  
 }
